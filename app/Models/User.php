@@ -6,10 +6,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Bavix\Wallet\Traits\HasWallet;
+use Bavix\Wallet\Interfaces\Wallet;
+use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
-class User extends Authenticatable
+#[ObservedBy([UserObserver::class])]
+class User extends Authenticatable implements Wallet
 {
     use HasFactory, Notifiable;
+    use HasWallet;
+
 
     /**
      * The attributes that are mass assignable.
